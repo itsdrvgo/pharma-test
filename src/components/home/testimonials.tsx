@@ -15,7 +15,7 @@ import { GeneralShell } from "../globals/layouts";
 import { Card, CardContent } from "../ui/card";
 
 interface PageProps {
-    initialData: Testimonial[];
+    initialData?: Testimonial[];
 }
 
 const dummyData: Testimonial[] = [

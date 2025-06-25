@@ -19,7 +19,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 
 interface PageProps extends GenericProps {
-    initialData: Blog[];
+    initialData?: Blog[];
 }
 
 const dummyData: Blog[] = [

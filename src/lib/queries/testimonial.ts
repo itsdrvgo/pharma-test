@@ -4,7 +4,11 @@ import { CreateTestimonial } from "../validations";
 
 class TestimonialQuery {
     async scan({ limit }: { limit: number }) {
-        const data = await db.select().from(testimonials).limit(limit);
+        const data = await db.query.testimonials.findMany({
+            limit,
+            orderBy: (f, o) => o.desc(f.createdAt),
+        });
+
         return data;
     }
 
