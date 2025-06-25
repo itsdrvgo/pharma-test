@@ -7,7 +7,7 @@ class BlogQuery {
         const data = await db.query.blogs.findMany({
             where: (f, o) => (type ? o.eq(f.type, type) : undefined),
             limit,
-            orderBy: (f, o) => [o.desc(f.createdAt)],
+            orderBy: (f, o) => o.desc(f.createdAt),
         });
 
         return data;

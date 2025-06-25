@@ -6,7 +6,7 @@ class TestimonialQuery {
     async scan({ limit }: { limit: number }) {
         const data = await db.query.testimonials.findMany({
             limit,
-            orderBy: (f, o) => [o.desc(f.createdAt)],
+            orderBy: (f, o) => o.desc(f.createdAt),
         });
 
         return data;
