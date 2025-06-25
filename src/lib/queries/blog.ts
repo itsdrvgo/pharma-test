@@ -1,14 +1,15 @@
+import { eq } from "drizzle-orm";
 import { db } from "../db";
 import { blogs } from "../db/schemas";
 import { Blog, CreateBlog } from "../validations";
 
 class BlogQuery {
     async scan({ limit, type }: { limit: number; type?: Blog["type"] }) {
-        const data = await db.query.blogs.findMany({
-            where: (f, o) => (type ? o.eq(f.type, type) : undefined),
-            limit,
-            orderBy: (f, o) => o.desc(f.createdAt),
-        });
+        const data = await db
+            .select()
+            .from(blogs)
+            .where(type ? eq(blogs.type, type) : undefined)
+            .limit(limit);
 
         return data;
     }
