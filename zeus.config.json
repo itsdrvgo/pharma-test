@@ -1,0 +1,7 @@
+{
+    "schema": "schema.graphql",
+    "output": "zeus",
+    "ts": true,
+    "react": false,
+    "node": true
+}
