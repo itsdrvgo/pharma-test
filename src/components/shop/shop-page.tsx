@@ -29,8 +29,8 @@ export function ShopPage({ initialData }: PageProps) {
     const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
         usePaginate({ initialData, first });
 
-    const products = data?.pages.flatMap((page) => page.edges) ?? [];
-    const lastCursor = data?.pages[data.pages.length - 1].pageInfo.endCursor;
+    const products = data?.pages.flatMap((page) => page!.edges) ?? [];
+    const lastCursor = data?.pages[data?.pages.length - 1]?.pageInfo?.endCursor;
 
     useEffect(() => {
         if (lastCursor) setAfter(lastCursor);
@@ -46,19 +46,22 @@ export function ShopPage({ initialData }: PageProps) {
                     Browse our collection of high-quality products.
                 </p>
             </div>
+
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {products.map(({ node: product }) => (
                     <Card
-                        key={product.id}
+                        key={product.id as string}
                         className="overflow-hidden transition-all hover:shadow-lg"
                     >
-                        <Link href={`/product/${product.id}`}>
+                        <Link
+                            href={`/products/${product.handle}-${(product.id as string).split("/").pop()}`}
+                        >
                             <CardHeader className="p-0">
                                 <div className="relative aspect-square">
                                     <Image
                                         src={
-                                            product.images.edges[0]?.node
-                                                .originalSrc ??
+                                            (product.images.edges[0]?.node
+                                                .originalSrc as string) ??
                                             "/placeholder.svg"
                                         }
                                         alt={
@@ -77,7 +80,7 @@ export function ShopPage({ initialData }: PageProps) {
                                 <p className="mt-2 text-sm font-semibold">
                                     {
                                         product.variants.edges[0]?.node.priceV2
-                                            .amount
+                                            .amount as string
                                     }{" "}
                                     {
                                         product.variants.edges[0]?.node.priceV2
